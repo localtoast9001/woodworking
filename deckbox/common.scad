@@ -382,19 +382,20 @@ module FaceTopRail(length, section_count)
 
 module FaceFrame(length, height)
 {
+    section_count = 4;
     FaceLegLeft(height);
     
     translate([0, length - TwoByFourDims[1], 0])
         FaceLegRight(height);
     
     translate([0, TwoByFourDims[1], 0])
-        FaceBottomRail(length - 2 * TwoByFourDims[1], 3);
+        FaceBottomRail(length - 2 * TwoByFourDims[1], section_count);
     
     translate([0, TwoByFourDims[1], height - TwoByFourDims[1]])
-        FaceTopRail(length - 2 * TwoByFourDims[1], 3);
+        FaceTopRail(length - 2 * TwoByFourDims[1], section_count);
     
-    section_length = (length - 2 * TwoByFourDims[1]) / 3;
-    for (i = [1:2])
+    section_length = (length - 2 * TwoByFourDims[1]) / section_count;
+    for (i = [1:section_count - 1])
     {
         translate([0, i * section_length + TwoByFourDims[1], FootHeight + TwoByFourDims[1]])
         FaceSlat(height - 2 * TwoByFourDims[1] - FootHeight);
