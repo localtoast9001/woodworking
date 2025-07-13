@@ -17,6 +17,47 @@ Free up garage space by storing stuff outside.
 ## Plan
 Create 2 boxes out of cedar. a 2'x6' and a 3'x6'. Do the 2'x6' first. sloped lid.
 
+![ortho](./deckbox2x6_ortho.png)
+
+![front](./deckbox2x6.png)
+
+![side](./deckbox2x6_side.png)
+
+![top](./deckbox2x6_top.png)
+
+![bottom](./deckbox2x6_bottom.png)
+
+### 2' x 6' Measurements
+ECHO: 85 - top angle
+
+Front:
+
+ECHO: "face leg left 2x4 height:", 19  
+ECHO: "top rail notch Z", 16  
+ECHO: "top rail notch height", 2.5  
+ECHO: "bottom rail notch Z", 2  
+ECHO: "bottom rail notch height", 2.5  
+ECHO: "face leg left 2x4 height:", 19   
+ECHO: "top rail notch Z", 16  
+ECHO: "top rail notch height", 2.5 
+ECHO: "bottom rail notch Z", 2  
+ECHO: "bottom rail notch height", 2.5  
+ECHO: "section length:", 16.25  
+
+Back:
+
+ECHO: "face leg left 2x4 height:", 21.25  
+ECHO: "top rail notch Z", 18.25  
+ECHO: "top rail notch height", 2.5  
+ECHO: "bottom rail notch Z", 2  
+ECHO: "bottom rail notch height", 2.5  
+ECHO: "face leg left 2x4 height:", 21.25  
+ECHO: "top rail notch Z", 18.25  
+ECHO: "top rail notch height", 2.5  
+ECHO: "bottom rail notch Z", 2  
+ECHO: "bottom rail notch height", 2.5  
+ECHO: "section length:", 16.25  
+
 ## Lumber calc
 
 ### 2'x6' box

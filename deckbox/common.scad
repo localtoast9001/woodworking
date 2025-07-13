@@ -54,6 +54,7 @@ module FaceLegLeft(height)
 {
     difference()
     {
+        echo("face leg left 2x4 height:", height);
         TwoByFour(height);
         
         // Cut the groove for the edge leg.
@@ -75,6 +76,8 @@ module FaceLegLeft(height)
             cube(
                 [TabWidth, TabDepth + 0.1, GetTabHeight(TwoByFourDims[1])],
                 center = false);
+        echo("top rail notch Z", height - TabWidth - GetTabHeight(TwoByFourDims[1]));
+        echo("top rail notch height", GetTabHeight(TwoByFourDims[1]));
         
         // Cut the notch for the bottom rail.
         translate(
@@ -86,6 +89,8 @@ module FaceLegLeft(height)
             cube(
                 [TabWidth, TabDepth + 0.1, GetTabHeight(TwoByFourDims[1])],
                 center = false);
+        echo("bottom rail notch Z", FootHeight + TabWidth);
+        echo("bottom rail notch height", GetTabHeight(TwoByFourDims[1]));                
         
         // Cut the peg holes for the bottom.
         translate([0, TwoByFourDims[1] - TabDepth, FootHeight])
@@ -395,6 +400,7 @@ module FaceFrame(length, height)
         FaceTopRail(length - 2 * TwoByFourDims[1], section_count);
     
     section_length = (length - 2 * TwoByFourDims[1]) / section_count;
+    echo("section length:", section_length);
     for (i = [1:section_count - 1])
     {
         translate([0, i * section_length + TwoByFourDims[1], FootHeight + TwoByFourDims[1]])
