@@ -2,7 +2,7 @@ thickness = 1/2;
 height = 2; // 1 + 1/2;
 
 base_thickness = 3/8;
-base_size = 4 / sin(60);
+base_size = 4; // 4 / sin(60);
 
 module base()
 {
