@@ -17,6 +17,9 @@ Free up garage space by storing stuff outside.
 ## Plan
 Create 2 boxes out of cedar. a 2'x6' and a 3'x6'. Do the 2'x6' first. sloped lid.
 
+### Issues
+* The drill press is too wobbly to cut slots for the mortisse joint. Switching to a different joint type half-lap. The goal is still to have no end-grain exposed to the outside.
+
 ![ortho](./deckbox2x6_ortho.png)
 
 ![front](./deckbox2x6.png)
