@@ -1,13 +1,17 @@
-thickness = 1/2;
-height = 2; // 1 + 1/2;
-
+phi = (1 + sqrt(5))/2;
 base_thickness = 3/8;
 base_size = 4; // 4 / sin(60);
 
+thickness = 3/8; // 1/2;
+golden_height = phi * base_size /4;
+height = round(golden_height * 8) / 8; // 1 + 3/4;
+echo(height);
+
 module base()
 {
+    base_edge = base_size - thickness / cos(30) / 2;
     pts = [for (angle = [0:5]) 
-        [base_size * cos(60 * angle), base_size * sin(60 * angle)]
+        [base_edge * cos(60 * angle), base_edge * sin(60 * angle)]
     ];
     
     linear_extrude(base_thickness)
@@ -26,14 +30,13 @@ module side()
         {
             union()
             {
-                translate([-thickness/2, 0, 0])
                 cube([thickness, base_size *2, height - thickness], center = false);
-                translate([0, 0, height - thickness])
+                translate([thickness/2, 0, height - thickness])
                 rotate([-90, 0, 0])
                 cylinder(h = base_size * 2, r = thickness / 2, $fn = 16);
             }
             
-            translate([0, -0.1, -0.1])
+            translate([thickness/2, -0.1, -0.1])
             cube([thickness + 0.1, base_size *2 + 0.2, base_thickness + 0.1], center = false);
         }
         
@@ -48,5 +51,4 @@ module side()
 for (angle = [0:5])
     rotate([0, 0, 60 * angle])
         side();
-
 base();
