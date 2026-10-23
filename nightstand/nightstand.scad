@@ -5,6 +5,8 @@
 // Y-axis = Depth
 // Z-axis = Height
 
+include <measure_stick.scad>;
+
 top_width = 24;
 top_depth = 17;
 top_thick = 1;
@@ -90,6 +92,69 @@ module side_panel() {
     offset = top_lip + (leg_thick - panel_thick)/2;
     translate([offset, top_lip + leg_thick, leg_height - top_compartment_height - shelf_thick])
         cube([panel_thick, top_depth - 2 * (top_lip + leg_thick), top_compartment_height + shelf_thick]);
+}
+
+module side_panel_measure() {
+    x = top_width;
+    y = top_depth + 2;
+    top_height = top_compartment_height + shelf_thick;
+    top_z = leg_height - top_compartment_height - shelf_thick;
+    bottom_height = bottom_compartment_height + 2 * (shelf_thick + side_panel_overhang);
+    bottom_z = bottom_compartment_bottom - side_panel_overhang;
+    mid_z = bottom_z + bottom_height;
+    mid_height = top_z - mid_z;
+
+
+    // top panel measure.
+    translate([x, y, top_z])
+    rotate([90, 0, 90])
+    measure_stick_y(top_height, label = 2, cap=2);
+    
+    // mid slats measure.
+    translate([x, y, mid_z])
+    rotate([90, 0, 90])
+    measure_stick_y(mid_height, label = 2, cap=2);    
+    
+    // bottom panel measure.
+    translate([x, y, bottom_z])
+    rotate([90, 0, 90])
+    measure_stick_y(bottom_height, label = 2, cap=2);
+    
+    // floor measure.
+    translate([x, y, 0])
+    rotate([90, 0, 90])
+    measure_stick_y(bottom_z, label = 2, cap=2);
+    
+    // side measure.
+    side_y = top_lip + leg_thick;
+    side_width = top_depth - 2 * (top_lip + leg_thick);
+    translate([x, side_y, 0])
+    rotate([0, 90, 0])
+    measure_stick_y(side_width, label = 2, cap = 2);
+    
+    // slats
+    array_width = slat_count * (slat_width + slat_spacing) - slat_spacing;
+    array_offset = (side_depth - array_width) / 2;
+    slat_y = array_offset;
+    translate([x, side_y, mid_z])
+    rotate([0, 90, 0])
+    measure_stick_y(slat_y, label = 1, cap = 1);
+    translate([x, side_y + array_width + slat_y, mid_z])
+    rotate([0, 90, 0])
+    measure_stick_y(slat_y, label = 1, cap = 1);
+    
+    for(i = [0:slat_count-1]) {
+        y_off = i * (slat_width + slat_spacing);
+        translate([x, side_y + slat_y + y_off, mid_z])
+        rotate([0, 90, 0])
+        measure_stick_y(slat_width, label = 1.5, cap = 1);
+        
+        if (i < slat_count - 1) {
+            translate([x, side_y + slat_y + y_off + slat_width, top_z])
+            rotate([0, 90, 0])
+            measure_stick_y(slat_spacing, label = 1.5, cap = 1);
+        }
+    }
 }
 
 module side_slats() {
@@ -283,6 +348,9 @@ module nightstand() {
 
 //inner_leg();
 nightstand();
+
+// measurements
+side_panel_measure();
 
 // top drawer.
 translate([
