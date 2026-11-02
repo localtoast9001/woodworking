@@ -182,14 +182,46 @@ module bottom_side_panel() {
 module intermediate_shelf() {
     side_offset = (leg_thick - panel_thick)/2 + top_lip;
     front_offset = top_lip + panel_thick;
-    translate([
-        side_offset + panel_thick, 
-        front_offset, 
-        0])
-    cube([
-        top_width - 2 * (side_offset + panel_thick), 
-        top_depth - 2 * front_offset, 
-        shelf_thick]);
+    
+    difference() {
+        translate([
+            side_offset + panel_thick, 
+            front_offset, 
+            0])
+        cube([
+            top_width - 2 * (side_offset + panel_thick), 
+            top_depth - 2 * front_offset, 
+            shelf_thick]);
+        
+        // cut the legs out of the shelf.
+        translate([
+            top_lip,
+            top_lip,
+            -shelf_thick / 2
+        ])
+        cube([leg_thick, leg_thick, shelf_thick * 2]);
+        
+        translate([
+            top_lip,
+            top_depth - top_lip - leg_thick,
+            -shelf_thick / 2
+        ])
+        cube([leg_thick, leg_thick, shelf_thick * 2]);
+
+        translate([
+            top_width - top_lip - leg_thick,
+            top_depth - top_lip - leg_thick,
+            -shelf_thick / 2
+        ])
+        cube([leg_thick, leg_thick, shelf_thick * 2]);
+
+        translate([
+            top_width - top_lip - leg_thick,
+            top_lip,
+            -shelf_thick / 2
+        ])
+        cube([leg_thick, leg_thick, shelf_thick * 2]);
+    }
 }
 
 module drawer(height) {
@@ -346,25 +378,104 @@ module nightstand() {
         bottom_compartment_height]);
 }
 
+module back_measure() {
+    translate([top_width - top_lip - leg_thick, top_depth - top_lip, 0])
+    rotate([90, 90, 180])
+    measure_stick_y(side_width, cap = 2, label = 2);
+    
+    translate([0, top_depth - top_lip, 0])
+    rotate([90, 0, 180])
+    measure_stick_y(bottom_compartment_bottom, cap = 2, label = 2);
+    
+    translate([0, top_depth - top_lip, bottom_compartment_bottom])
+    rotate([90, 0, 180])
+    measure_stick_y(shelf_thick, cap = 1, label = 1);
+
+    translate([0, top_depth - top_lip, bottom_compartment_bottom + shelf_thick])
+    rotate([90, 0, 180])
+    measure_stick_y(bottom_compartment_height, cap = 2, label = 2);
+
+    translate([0, top_depth - top_lip, bottom_compartment_bottom + shelf_thick + bottom_compartment_height])
+    rotate([90, 0, 180])
+    measure_stick_y(shelf_thick, cap = 1, label = 1);
+
+    mid_height = leg_height - top_compartment_height - bottom_compartment_height - bottom_compartment_bottom - 3 * shelf_thick;
+
+    translate([0, top_depth - top_lip, bottom_compartment_bottom + shelf_thick + bottom_compartment_height + shelf_thick])
+    rotate([90, 0, 180])
+    measure_stick_y(mid_height, cap = 2, label = 2);
+    
+    translate([0, top_depth - top_lip, leg_height - top_compartment_height - shelf_thick])
+    rotate([90, 0, 180])
+    measure_stick_y(shelf_thick, cap = 1, label = 1);
+    
+    translate([0, top_depth - top_lip, leg_height - top_compartment_height])
+    rotate([90, 0, 180])
+    measure_stick_y(top_compartment_height, cap = 2, label = 2);    
+}
+
+module shelf_measure() {
+    side_offset = (leg_thick - panel_thick)/2 + top_lip;
+    front_offset = top_lip + panel_thick;
+    shelf_depth = top_depth - 2 * front_offset;
+    shelf_width = top_width - 2 * (side_offset + panel_thick);
+    
+    notch_x = top_lip + leg_thick - side_offset - panel_thick;
+    notch_y = top_lip + leg_thick - front_offset;
+    
+    translate([
+        top_width, 
+        front_offset + 40, 
+        0])
+    measure_stick_y(shelf_depth, cap = 2, label = 2);
+    
+    translate([
+        side_offset + panel_thick,
+        40,
+        0
+    ])
+    rotate([0, 0, -90])
+    measure_stick_y(shelf_width, cap = 2, label = 2);
+    
+    translate([
+        top_lip + leg_thick, 
+        front_offset + 40, 
+        shelf_thick])
+    measure_stick_y(notch_y, cap = 1, label = 1);
+    
+    translate([
+        side_offset + panel_thick,
+        40 + top_depth - top_lip - leg_thick,
+        shelf_thick
+    ])
+    rotate([0, 0, -90])
+    measure_stick_y(notch_x, cap = 1, label = 1);
+}
+
 //inner_leg();
 nightstand();
 
 // measurements
 side_panel_measure();
+back_measure();
+shelf_measure();
 
 // top drawer.
 translate([
     top_lip + leg_thick,
-    top_lip + panel_thick,
+    top_lip + panel_thick - 40,
     total_height - top_thick - top_compartment_height])
 drawer(top_compartment_height);
 
 // bottom drawer.
 translate([
     top_lip + leg_thick,
-    top_lip + panel_thick,
+    top_lip + panel_thick - 40,
     bottom_compartment_bottom + panel_thick])   
 drawer(bottom_compartment_height);
+
+translate([0, 40, 0])
+intermediate_shelf();
 
 // mid drawer (test).
 /*
